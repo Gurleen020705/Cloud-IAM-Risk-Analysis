@@ -1,0 +1,206 @@
+[
+  {
+    "id": "user-101",
+    "name": "Avery Morgan",
+    "email": "avery@example.test",
+    "type": "Human",
+    "owner": "Platform team",
+    "sample_region": "North America",
+    "roles": [
+      "roles/owner"
+    ],
+    "mfa": false,
+    "key_age_days": 0
+  },
+  {
+    "id": "svc-204",
+    "name": "svc-reporting",
+    "email": "svc-reporting@example.test",
+    "type": "Service account",
+    "owner": "Data team",
+    "sample_region": "Europe",
+    "roles": [
+      "roles/editor"
+    ],
+    "mfa": null,
+    "key_age_days": 245
+  },
+  {
+    "id": "ext-310",
+    "name": "External access",
+    "email": "allUsers",
+    "type": "External principal",
+    "owner": "Public access",
+    "sample_region": "Asia Pacific",
+    "roles": [
+      "allUsers"
+    ],
+    "mfa": null,
+    "key_age_days": 0
+  },
+  {
+    "id": "user-115",
+    "name": "Jordan Lee",
+    "email": "jordan@example.test",
+    "type": "Human",
+    "owner": "Engineering",
+    "sample_region": "North America",
+    "roles": [
+      "roles/viewer"
+    ],
+    "mfa": true,
+    "key_age_days": 0
+  },
+  {
+    "sample_region": "North America",
+    "type": "Human",
+    "mfa": false,
+    "owner": "Security",
+    "name": "Mia Chen",
+    "email": "mia@example.test",
+    "key_age_days": 0,
+    "status": "Active",
+    "id": "user-122",
+    "roles": [
+      "roles/iam.securityAdmin"
+    ],
+    "external": false
+  },
+  {
+    "sample_region": "Europe",
+    "type": "Service account",
+    "mfa": null,
+    "owner": "Developer Platform",
+    "name": "svc-ci-deploy",
+    "email": "svc-ci-deploy@example.test",
+    "key_age_days": 412,
+    "status": "Active",
+    "id": "svc-231",
+    "roles": [
+      "roles/editor"
+    ],
+    "external": false
+  },
+  {
+    "sample_region": "North America",
+    "type": "External principal",
+    "mfa": null,
+    "owner": "Vendor",
+    "name": "contractor@vendor.test",
+    "email": "contractor@vendor.test",
+    "key_age_days": 0,
+    "status": "Active",
+    "id": "ext-318",
+    "roles": [
+      "roles/owner"
+    ],
+    "external": true
+  },
+  {
+    "sample_region": "Asia Pacific",
+    "type": "Human",
+    "mfa": true,
+    "owner": "Finance",
+    "name": "Noah Patel",
+    "email": "noah@example.test",
+    "key_age_days": 0,
+    "status": "Inactive",
+    "id": "user-127",
+    "roles": [
+      "roles/viewer"
+    ],
+    "external": false
+  },
+  {
+    "sample_region": "Europe",
+    "type": "Service account",
+    "mfa": null,
+    "owner": "Analytics",
+    "name": "svc-legacy-export",
+    "email": "svc-legacy-export@example.test",
+    "key_age_days": 137,
+    "status": "Active",
+    "unused_role": true,
+    "id": "svc-238",
+    "roles": [
+      "roles/storage.admin"
+    ],
+    "external": false
+  },
+  {
+    "sample_region": "Asia Pacific",
+    "type": "Human",
+    "mfa": true,
+    "owner": "Cloud Operations",
+    "name": "Priya Shah",
+    "email": "priya@example.test",
+    "key_age_days": 0,
+    "status": "Active",
+    "id": "user-133",
+    "roles": [
+      "roles/editor"
+    ],
+    "external": false
+  },
+  {
+    "sample_region": "North America",
+    "type": "Service account",
+    "mfa": null,
+    "owner": "SRE",
+    "name": "svc-monitoring",
+    "email": "svc-monitoring@example.test",
+    "key_age_days": 32,
+    "status": "Active",
+    "id": "svc-244",
+    "roles": [
+      "roles/viewer"
+    ],
+    "external": false
+  },
+  {
+    "sample_region": "Europe",
+    "type": "External principal",
+    "mfa": null,
+    "owner": "Public access",
+    "name": "allAuthenticatedUsers",
+    "email": "allAuthenticatedUsers",
+    "key_age_days": 0,
+    "status": "Active",
+    "id": "ext-325",
+    "roles": [
+      "allAuthenticatedUsers"
+    ],
+    "external": true
+  },
+  {
+    "sample_region": "North America",
+    "type": "Human",
+    "mfa": true,
+    "owner": "Data Science",
+    "name": "Ethan Brooks",
+    "email": "ethan@example.test",
+    "key_age_days": 0,
+    "status": "Active",
+    "unused_role": true,
+    "id": "user-139",
+    "roles": [
+      "roles/owner"
+    ],
+    "external": false
+  },
+  {
+    "sample_region": "Asia Pacific",
+    "type": "Service account",
+    "mfa": null,
+    "owner": "Infrastructure",
+    "name": "svc-backup",
+    "email": "svc-backup@example.test",
+    "key_age_days": 205,
+    "status": "Active",
+    "id": "svc-251",
+    "roles": [
+      "roles/backup.admin"
+    ],
+    "external": false
+  }
+]

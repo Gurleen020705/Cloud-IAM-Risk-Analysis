@@ -1,0 +1,46 @@
+Cloud IAM Risk Analyzer is ready.
+Open http://127.0.0.1:8005/ in your browser.
+Mode: synthetic sample data only; no cloud account is connected.
+[31/Oct/2026 12:39:22] "GET / HTTP/1.1" 200 -
+[31/Oct/2026 12:39:22] "GET /assets/css/dashboard.css?v=13 HTTP/1.1" 200 -
+[31/Oct/2026 12:39:22] "GET /assets/js/dashboard.js?v=13 HTTP/1.1" 200 -
+[31/Oct/2026 12:39:22] "GET /api/health HTTP/1.1" 200 -
+[31/Oct/2026 12:39:22] "GET /api/dashboard HTTP/1.1" 200 -
+[31/Oct/2026 12:39:22] "GET /assets/favicon.svg?v=1 HTTP/1.1" 200 -
+[31/Oct/2026 12:40:41] "POST /api/scan HTTP/1.1" 200 -
+[31/Oct/2026 12:40:44] "POST /api/scan HTTP/1.1" 200 -
+[31/Oct/2026 12:42:01] "GET / HTTP/1.1" 304 -
+[31/Oct/2026 12:42:01] "GET /assets/css/dashboard.css?v=13 HTTP/1.1" 304 -
+[31/Oct/2026 12:42:01] "GET /assets/js/dashboard.js?v=13 HTTP/1.1" 304 -
+[31/Oct/2026 12:42:02] "GET /api/health HTTP/1.1" 200 -
+[31/Oct/2026 12:42:02] "GET /api/dashboard HTTP/1.1" 200 -
+[31/Oct/2026 12:42:04] "GET / HTTP/1.1" 304 -
+[31/Oct/2026 12:42:04] "GET /api/health HTTP/1.1" 200 -
+[31/Oct/2026 12:42:04] "GET /api/dashboard HTTP/1.1" 200 -
+[31/Oct/2026 12:42:44] "GET / HTTP/1.1" 200 -
+[31/Oct/2026 12:42:44] "GET /assets/css/dashboard.css?v=13 HTTP/1.1" 200 -
+[31/Oct/2026 12:42:44] "GET /assets/js/dashboard.js?v=13 HTTP/1.1" 200 -
+[31/Oct/2026 12:42:44] "GET /api/health HTTP/1.1" 200 -
+[31/Oct/2026 12:42:44] "GET /api/dashboard HTTP/1.1" 200 -
+[31/Oct/2026 12:42:44] "GET /assets/favicon.svg?v=1 HTTP/1.1" 200 -
+[31/Oct/2026 12:42:59] "POST /api/scan HTTP/1.1" 200 -
+[31/Oct/2026 12:43:02] "POST /api/scan HTTP/1.1" 200 -
+[31/Oct/2026 12:43:02] "GET / HTTP/1.1" 304 -
+[31/Oct/2026 12:43:02] "GET /api/health HTTP/1.1" 200 -
+[31/Oct/2026 12:43:02] "GET /api/dashboard HTTP/1.1" 200 -
+[31/Oct/2026 12:43:03] "GET / HTTP/1.1" 304 -
+[31/Oct/2026 12:43:03] "GET /api/health HTTP/1.1" 200 -
+[31/Oct/2026 12:43:03] "GET /api/dashboard HTTP/1.1" 200 -
+[31/Oct/2026 12:43:10] "GET / HTTP/1.1" 200 -
+[31/Oct/2026 12:43:10] "GET /assets/css/dashboard.css?v=13 HTTP/1.1" 304 -
+[31/Oct/2026 12:43:10] "GET /assets/images/iam-cloud-topology.png HTTP/1.1" 200 -
+[31/Oct/2026 12:43:10] "GET /assets/js/dashboard.js?v=13 HTTP/1.1" 304 -
+[31/Oct/2026 12:43:10] "GET /api/health HTTP/1.1" 200 -
+[31/Oct/2026 12:43:10] "GET /api/dashboard HTTP/1.1" 200 -
+[31/Oct/2026 12:43:15] "GET / HTTP/1.1" 304 -
+[31/Oct/2026 12:43:15] "GET /api/health HTTP/1.1" 200 -
+[31/Oct/2026 12:43:15] "GET /api/dashboard HTTP/1.1" 200 -
+[31/Oct/2026 12:43:20] "GET / HTTP/1.1" 200 -
+[31/Oct/2026 12:43:20] "GET /assets/images/iam-cloud-topology.png HTTP/1.1" 200 -
+[31/Oct/2026 12:43:20] "GET /api/health HTTP/1.1" 200 -
+[31/Oct/2026 12:43:20] "GET /api/dashboard HTTP/1.1" 200 -

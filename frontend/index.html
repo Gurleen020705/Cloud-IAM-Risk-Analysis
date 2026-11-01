@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07101f">
+  <meta name="description" content="A local learning dashboard for explainable cloud IAM risk analysis using synthetic sample data.">
+  <title>Sentinel IAM · Cloud Risk Analyzer</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=1">
+  <link rel="stylesheet" href="assets/css/dashboard.css?v=19">
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <svg class="cloud-lock-watermark" viewBox="0 0 600 480" aria-hidden="true">
+    <path class="watermark-cloud" d="M134 291h326c54 0 91-37 91-84 0-44-34-79-78-83-16-67-75-112-145-112-64 0-119 39-140 98-55-7-103 33-103 89 0 51 39 92 89 92Z"/>
+    <path class="watermark-lock" d="M235 254v-42c0-40 29-71 65-71s65 31 65 71v42"/>
+    <rect class="watermark-lock" x="216" y="245" width="168" height="132" rx="23"/>
+    <circle class="watermark-lock-fill" cx="300" cy="304" r="12"/>
+    <path class="watermark-lock" d="M300 316v25"/>
+  </svg>
+  <div class="ambient-code" aria-hidden="true"><span>SECURITY TRACE · DECORATIVE</span><pre id="ambientCodeText"></pre></div>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#overview"><span class="brand-icon">⌁</span><span>Sentinel<span class="cyan">IAM</span><small>IDENTITY SECURITY</small></span></a>
+      <div class="side-label">WORKSPACE</div>
+      <nav>
+        <a class="active" href="#overview">◫ <span>Dashboard</span></a>
+        <a href="#risk-scanner">◉ <span>Risk scanner</span></a>
+        <a href="#identities">♧ <span>Identity management</span></a>
+        <a href="#findings">⚠ <span>Findings</span></a>
+        <a href="#analytics">⌁ <span>Analytics</span></a>
+        <a href="#scan-history">◷ <span>Scan history</span></a>
+        <a href="#settings">⚙ <span>Settings</span></a>
+        <a href="#topology">⌘ <span>Cloud topology</span></a>
+      </nav>
+      <div class="side-bottom"><span class="pulse"></span><div><b id="backendLabel">Checking backend</b><small id="sourceLabel">Please wait…</small></div></div>
+      <div class="analyst"><span class="avatar">GK</span><span><b>Gurleen Kour</b><small>Security Analyst</small></span></div>
+    </aside>
+
+    <main id="overview" class="main">
+      <header class="topbar"><span>SECURITY OPERATIONS <i>/</i> <b>OVERVIEW</b></span><span class="environment"><i></i> SAMPLE ENVIRONMENT</span></header>
+
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">IDENTITY THREAT POSTURE <span class="badge" id="connectionBadge">CONNECTING</span></div>
+          <h1>Cloud IAM <span>Risk Analysis</span></h1>
+          <p>Understand access risk with explainable checks, clear evidence, and practical next steps.</p>
+          <div class="hero-actions"><button id="scanButton" class="scan-button"><span>◉</span> Run IAM risk scan</button><span class="read-only-tag"><i></i> Synthetic data · no cloud changes</span></div>
+          <div id="helpBanner" class="help-banner" hidden><b>Browser preview</b><span>Sample mode runs without the backend. To start the local API, run <code>.\run.bat</code> from the project folder.</span></div>
+        </div>
+        <div class="hero-visual" aria-label="Illustration of cloud identity protection">
+          <div class="hero-orbit orbit-a"></div><div class="hero-orbit orbit-b"></div>
+          <div class="provider-orbit" aria-hidden="true"><span class="provider-chip provider-gcp"><b>G</b> GCP · SAMPLE</span><span class="provider-chip provider-aws"><b>A</b> AWS · SAMPLE</span><span class="provider-chip provider-azure"><b>▰</b> AZURE · SAMPLE</span></div>
+          <div class="cloud-core" aria-label="Three-dimensional cloud protection illustration">
+            <svg class="cloud-3d" viewBox="0 0 240 170" aria-hidden="true">
+              <defs>
+                <linearGradient id="cloudBody" x1="0" y1="0" x2=".9" y2="1"><stop stop-color="#8eeeff"/><stop offset=".27" stop-color="#398cf3"/><stop offset=".68" stop-color="#2756bd"/><stop offset="1" stop-color="#172f79"/></linearGradient>
+                <linearGradient id="cloudRim" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#c7faff"/><stop offset=".5" stop-color="#6eeaff"/><stop offset="1" stop-color="#c9a7ff"/></linearGradient>
+                <radialGradient id="cloudReflection" cx=".38" cy=".12" r=".8"><stop stop-color="#fff" stop-opacity=".62"/><stop offset=".45" stop-color="#b8f5ff" stop-opacity=".08"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+              </defs>
+              <path class="cloud-body" d="M48 133C25 133 10 117 10 96c0-20 16-36 37-37C54 32 78 12 108 12c31 0 56 21 62 50 7-4 14-6 22-6 23 0 41 18 41 40s-18 37-40 37H48Z"/>
+              <path class="cloud-highlight" d="M35 76c8-28 33-48 64-48 22 0 42 12 53 30M24 96c0-9 4-16 10-21M187 67c19-4 37 9 41 26"/>
+              <path class="cloud-reflection" d="M22 104c12 16 29 18 51 18h103c17 0 29-6 36-18-8 30-31 43-62 43H61c-24 0-39-14-39-34 0-3 0-6 1-9Z"/>
+              <path class="cloud-glass" d="M11 96c0-20 16-36 37-37C54 32 78 12 108 12c31 0 56 21 62 50 7-4 14-6 22-6 23 0 41 18 41 40s-18 37-40 37H48c-23 0-37-16-37-37Z"/>
+            </svg>
+            <span class="cloud-core-label">CLOUD IAM</span>
+          </div>
+          <div id="heroShieldState" class="shield-core" role="img" aria-label="IAM shield locked due to sample risk"><svg viewBox="0 0 32 36" aria-hidden="true"><path d="M16 2 28 7v9c0 8-4 14-12 18C8 30 4 24 4 16V7z"/><rect x="10" y="15" width="12" height="10" rx="2"/><path class="lock-closed" d="M12 15v-3a4 4 0 0 1 8 0v3"/><path class="lock-open" d="M12 15v-3a4 4 0 0 1 7-2"/></svg></div>
+          <span class="visual-tag tag-left">ROLE REVIEW</span><span class="visual-tag tag-right">TRUST CHECK</span>
+          <span class="visual-spark spark-a"></span><span class="visual-spark spark-b"></span><span class="visual-spark spark-c"></span>
+        </div>
+      </section>
+
+      <section class="metrics" aria-label="Sample security metrics">
+        <article class="metric"><span class="metric-title">TOTAL IDENTITIES</span><b id="identityCount" class="big">--</b><small>Fictional user and service accounts</small><div class="mini-chart" aria-hidden="true"><i style="height:48%"></i><i style="height:70%"></i><i style="height:56%"></i><i style="height:88%"></i><i style="height:63%"></i><i style="height:100%"></i></div></article>
+        <article class="metric"><span class="metric-title">PRIVILEGED ACCOUNTS</span><b id="privilegedCount" class="big">--</b><small>Owner, editor or admin-like roles</small><div class="dots-chart" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+        <article class="metric"><span class="metric-title">ACTIVE SECURITY RISKS</span><b id="findingCount" class="big">--</b><small>Open sample findings</small><div class="dots-chart" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+        <article class="metric"><span class="metric-title">CRITICAL VULNERABILITIES</span><b id="criticalCount" class="big">--</b><small><span class="red">●</span> Needs an owner review</small><div class="bar"><i id="complianceBar"></i></div></article>
+      </section>
+
+      <section id="risk-scanner" class="scanner-layout" aria-label="Synthetic IAM risk scanner and analytics">
+        <article class="panel radar-panel"><div class="panel-head"><div><span class="eyebrow">SYNTHETIC SCAN · NO CLOUD TELEMETRY</span><h2>Identity risk radar</h2><p id="radarMessage">Ready to inspect the sample identity model.</p></div><span id="scanState" class="state">READY</span></div>
+          <div id="radarStage" class="radar-stage">
+            <div class="radar-grid" aria-hidden="true"><i class="radar-ring ring-a"></i><i class="radar-ring ring-b"></i><i class="radar-ring ring-c"></i><i class="radar-cross cross-x"></i><i class="radar-cross cross-y"></i><i class="radar-sweep"></i><span class="radar-beacon beacon-one"></span><span class="radar-beacon beacon-two"></span><span class="radar-beacon beacon-three"></span><span class="radar-beacon beacon-four"></span></div>
+            <div class="radar-core"><span>IAM</span><b id="radarScore">--</b><small>RISK SCORE</small></div>
+            <button class="radar-category cat-users selected" data-scan-category="users" type="button">♙ USERS</button><button class="radar-category cat-admin" data-scan-category="admins" type="button">♜ ADMINS</button><button class="radar-category cat-roles" data-scan-category="roles" type="button">⌘ ROLES</button><button class="radar-category cat-permissions" data-scan-category="permissions" type="button">◈ PERMISSIONS</button><button class="radar-category cat-mfa" data-scan-category="mfa" type="button">▣ MFA</button><button class="radar-category cat-resources" data-scan-category="resources" type="button">☁ RESOURCES</button><button class="radar-category cat-policies" data-scan-category="policies" type="button">▤ POLICIES</button>
+          </div>
+          <div class="radar-footer"><div><small>LAST SAMPLE SCAN</small><b id="lastScanTime">Not run yet</b></div><div class="radar-progress"><i id="radarProgressFill"></i></div><b id="radarProgressValue">0%</b><button id="startScanButton" type="button" class="scan-button"><span>◉</span> Start new scan</button></div>
+        </article>
+        <article class="panel scanner-insights" id="analytics"><div class="panel-head"><div><span class="eyebrow">CURRENT SAMPLE SNAPSHOT</span><h2 id="categoryTitle">User identities</h2><p id="categoryDescription">Review user accounts, MFA status, inactivity, and unusual sign-in signals.</p></div><span class="insight-icon">✧</span></div>
+          <div id="categoryFacts" class="category-facts"><div><small>AFFECTED IDENTITIES</small><b id="categoryAffected">--</b></div><div><small>OPEN SIGNALS</small><b id="categorySignals">--</b></div><div><small>TOP SEVERITY</small><b id="categorySeverity">--</b></div></div>
+          <div class="analytics-block"><div class="analytics-title"><span>Risk distribution</span><small>IDENTITIES BY LEVEL</small></div><div id="scannerDistribution" class="scanner-distribution"></div></div>
+          <div class="analytics-block"><div class="analytics-title"><span>Risk trend</span><small id="trendSummary">Waiting for scans</small></div><svg id="trendChart" class="trend-chart" viewBox="0 0 360 92" role="img" aria-label="Risk score across recent synthetic scans"><path class="trend-grid" d="M0 20H360M0 46H360M0 72H360"/><path id="trendLine" class="trend-line" d="M0 70H360"/><g id="trendPoints"></g></svg><div id="trendLabels" class="trend-labels"></div></div>
+          <div class="posture-row"><span>Security posture</span><b id="postureValue">--%</b><div class="posture-track"><i id="postureFill"></i></div></div>
+          <div class="posture-row remediation-row"><span>Remediation verified</span><b id="remediationValue">0 / 0</b><div class="posture-track"><i id="remediationFill"></i></div></div>
+        </article>
+      </section>
+
+      <section class="grid-two">
+        <article class="panel posture"><div class="panel-head"><div><span class="eyebrow">SCAN PIPELINE</span><h2>IAM review stages</h2><p id="scanMessage">Ready when you are. No cloud account is connected.</p></div><span id="pipelineState" class="state">IDLE</span></div>
+          <div class="steps">
+            <div><span class="step-icon cyan-bg">♧</span><span><b>Identity inventory</b><small>Sample human and service accounts</small></span><i id="step1">READY</i></div>
+            <div><span class="step-icon violet-bg">⬡</span><span><b>Role and access review</b><small>Public, Owner, and Editor roles</small></span><i id="step2">READY</i></div>
+            <div><span class="step-icon orange-bg">⌑</span><span><b>Credential hygiene</b><small>Sample service-account key age</small></span><i id="step3">READY</i></div>
+          </div>
+          <div class="progress-row"><div class="progress"><i id="progressBar"></i></div><span id="progressText">Waiting for scan</span><b id="progressPercent">0%</b></div>
+          <div class="scan-meter" role="img" aria-label="Scan activity meter; labelled from zero to one hundred percent, follows scan progress and returns to idle when complete"><svg viewBox="0 0 160 108" aria-hidden="true"><defs><linearGradient id="meterGradient"><stop stop-color="#39d9ff"/><stop offset=".58" stop-color="#7f86ff"/><stop offset="1" stop-color="#ff719b"/></linearGradient><linearGradient id="meterShade" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#305a91" stop-opacity=".55"/><stop offset="1" stop-color="#10182e" stop-opacity=".15"/></linearGradient></defs><path class="meter-shade" d="M18 84A62 62 0 0 1 142 84L142 95H18Z"/><path class="meter-track" d="M18 84A62 62 0 0 1 142 84"/><path class="meter-band" d="M18 84A62 62 0 0 1 142 84"/><path class="meter-flash" d="M18 84A62 62 0 0 1 142 84"/><circle class="meter-flare" cx="18" cy="84" r="3"/><circle class="meter-flare meter-flare-end" cx="142" cy="84" r="3"/><path class="meter-ticks" d="M19 83l8 1M37 45l7 5M80 22v9M123 45l-7 5M141 83l-8 1"/><text class="meter-scale" x="18" y="101">0</text><text class="meter-scale" x="41" y="54">25</text><text class="meter-scale" x="80" y="43">50</text><text class="meter-scale" x="119" y="54">75</text><text class="meter-scale" x="142" y="101">100</text><line id="scanNeedle" x1="80" y1="84" x2="80" y2="30"/><circle class="meter-hub" cx="80" cy="84" r="5"/><text id="scanMeterValue" class="meter-number" x="80" y="78">0%</text></svg></div>
+          <div class="scan-meter-caption"><span>SCAN ACTIVITY</span><b id="scanMeterState">IDLE</b><small>PIPELINE PROGRESS · 0–100%</small></div>
+        </article>
+        <article class="panel alerts"><div class="panel-head"><div><span class="eyebrow">LATEST SIGNALS</span><h2>Priority alerts</h2><p>Generated from the latest sample scan</p></div><span class="alert-mark">●</span></div><div id="alertList" class="alert-list"><div class="empty">Run a sample scan to show alerts.</div></div></article>
+      </section>
+
+      <section class="visual-grid" aria-label="Risk visualization">
+        <article id="threat-map" class="panel map-panel">
+          <div class="panel-head"><div><span class="eyebrow">ILLUSTRATIVE VIEW · NOT LIVE TELEMETRY</span><h2>Identity trust map</h2><p>Sample links between principals and access-risk signals.</p></div><span class="map-orb">◎</span></div>
+          <div class="map-stage world-stage" role="group" aria-label="Illustrative world map with animated sample risk markers. Select a region to focus the sample score.">
+            <svg class="world-map" viewBox="0 0 1000 430" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <defs>
+                <linearGradient id="landGlow" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34cfff" stop-opacity=".3"/><stop offset="1" stop-color="#7865ff" stop-opacity=".18"/></linearGradient>
+                <pattern id="landDots" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.35" fill="#63c9ff" fill-opacity=".72"/><circle cx="6.5" cy="6.5" r=".8" fill="#ab9aff" fill-opacity=".55"/></pattern>
+                <radialGradient id="heatCritical"><stop offset="0" stop-color="#ff436c" stop-opacity=".83"/><stop offset=".35" stop-color="#ff436c" stop-opacity=".44"/><stop offset="1" stop-color="#ff436c" stop-opacity="0"/></radialGradient>
+                <radialGradient id="heatElevated"><stop offset="0" stop-color="#ffb94e" stop-opacity=".76"/><stop offset=".38" stop-color="#ff8e4e" stop-opacity=".34"/><stop offset="1" stop-color="#ff8e4e" stop-opacity="0"/></radialGradient>
+                <radialGradient id="heatMedium"><stop offset="0" stop-color="#b88cff" stop-opacity=".72"/><stop offset=".4" stop-color="#8c72ff" stop-opacity=".3"/><stop offset="1" stop-color="#8c72ff" stop-opacity="0"/></radialGradient>
+                <radialGradient id="heatMonitor"><stop offset="0" stop-color="#42e5b2" stop-opacity=".7"/><stop offset=".4" stop-color="#37d9ff" stop-opacity=".28"/><stop offset="1" stop-color="#37d9ff" stop-opacity="0"/></radialGradient>
+              </defs>
+              <path class="map-graticule" d="M75 145H850M92 205H840M120 265H820M155 325H790M220 80V380M330 64V380M440 58V380M550 63V380M660 80V380M770 112V340"/>
+              <path class="continent" d="M72 108 82 92 100 84 112 68 133 63 148 49 170 55 184 45 201 55 208 72 230 72 246 84 263 103 255 118 239 124 228 138 211 142 205 158 189 164 184 180 170 190 160 207 145 216 132 205 122 190 109 184 106 168 94 158 92 142 78 133Z"/>
+              <path class="continent" d="M252 56 270 47 288 58 291 72 279 87 264 93 252 81Z"/>
+              <path class="continent" d="M169 188 183 192 193 203 202 216 198 226 190 222 184 211 176 204Z"/>
+              <path class="continent" d="M193 226 208 220 224 228 237 244 241 263 235 278 229 296 227 318 217 343 207 373 195 357 197 333 187 310 184 286 176 267 181 246Z"/>
+              <path class="continent" d="M396 103 407 94 421 92 430 82 438 62 447 57 456 70 452 86 463 93 474 102 466 112 450 116 441 128 427 124 418 135 405 128 396 117Z"/>
+              <path class="continent" d="M432 142 445 135 461 139 474 150 482 165 478 179 488 193 483 210 472 223 467 244 457 262 450 285 440 273 435 251 426 231 419 211 412 194 415 176 409 161 419 150Z"/>
+              <path class="continent" d="M478 91 492 81 510 79 526 67 548 69 564 76 585 73 602 83 622 84 639 93 659 87 679 94 695 103 714 102 730 112 751 111 768 122 788 125 805 138 828 153 839 166 830 179 813 177 800 188 782 180 766 188 750 181 737 190 718 181 701 188 684 179 669 190 650 182 638 171 622 175 612 162 599 169 584 159 568 161 553 152 538 154 524 143 508 146 496 137 484 126Z"/>
+              <path class="continent" d="M508 152 524 158 535 170 531 183 520 179 515 168Z"/>
+              <path class="continent" d="M714 211 730 205 747 208 761 215 777 216 790 228 795 242 786 253 769 257 756 250 742 254 731 244 716 242 706 229Z"/>
+              <path class="continent" d="M807 285 822 277 840 277 855 286 866 300 858 314 843 321 826 314 813 306Z"/>
+              <path class="continent" d="M380 281 386 291 383 310 377 301Z"/>
+              <path class="continent" d="M135 398 244 399 348 397 451 401 555 399 661 402 768 398 867 402 854 416 747 419 632 416 520 421 411 416 300 420 191 416 139 411Z"/>
+              <path class="country-lines" d="M111 93 132 109 154 99 177 118 195 93 218 111 239 102M123 151 147 139 165 158 190 148 205 162M204 245 220 260 213 282 230 296 211 316 216 340M423 106 440 109 451 99M426 170 449 182 467 170 479 195 458 211 465 239M508 104 526 122 550 110 573 133 596 118 617 140 641 126 663 146 690 132 714 152 742 139 769 156 799 145M625 152 647 164 670 151 692 172 714 160"/>
+              <g id="mapHeatLayer" class="map-heat-layer" aria-hidden="true"></g>
+              <g id="mapFixFlights" aria-hidden="true"></g>
+              <path class="map-route" d="M153 144 C278 66 357 130 457 162 S650 121 752 151 830 247 841 293"/>
+              <path class="map-route secondary-route" d="M226 286 C338 247 381 184 457 162 S604 213 695 170"/>
+            </svg>
+            <div class="scan-sweep" aria-hidden="true"></div>
+            <button type="button" class="world-point point-americas emerging" data-region="North America" aria-label="Focus North America sample risk"><i></i><b>AMER</b><span class="point-lock" aria-hidden="true">🔒</span></button>
+            <button type="button" class="world-point point-europe easing" data-region="Europe" aria-label="Focus Europe sample risk"><i></i><b>EMEA</b><span class="point-lock" aria-hidden="true">🔒</span></button>
+            <button type="button" class="world-point point-asia emerging" data-region="Asia Pacific" aria-label="Focus Asia Pacific sample risk"><i></i><b>APAC</b><span class="point-lock" aria-hidden="true">🔒</span></button>
+            <div class="map-provider-orbit" aria-hidden="true"><span class="map-provider map-provider-gcp">GCP</span><span class="map-provider map-provider-aws">AWS</span><span class="map-provider map-provider-azure">AZ</span></div>
+            <span id="mapShieldState" class="world-core"><svg viewBox="0 0 32 36" aria-hidden="true"><path d="M16 2 28 7v9c0 8-4 14-12 18C8 30 4 24 4 16V7z"/><rect x="10" y="15" width="12" height="10" rx="2"/><path class="lock-closed" d="M12 15v-3a4 4 0 0 1 8 0v3"/><path class="lock-open" d="M12 15v-3a4 4 0 0 1 7-2"/></svg><b>IAM</b></span>
+            <div class="map-live-label"><span class="live-pulse"></span><span id="mapPulseLabel">SIMULATED SIGNAL · EMERGING</span></div>
+          </div>
+          <div class="map-focus-row"><div><small>REGION FOCUS</small><b id="mapRegionTitle">All regions</b></div><div><small>AVERAGE RISK</small><b><span id="mapRegionScore" aria-live="polite">--</span><em>/100</em></b></div><div><small>IDENTITIES</small><b id="mapRegionIdentityCount">--</b></div><button id="mapAutoButton" type="button" aria-pressed="true">AUTO FOLLOW</button></div>
+          <div id="mapRegionControls" class="map-region-controls" aria-label="Choose a sample region"></div>
+          <div class="map-legend"><span><i class="critical-dot"></i> Critical</span><span><i class="high-dot"></i> High</span><span><i class="medium-dot"></i> Moderate</span><span><i class="safe-dot"></i> Low</span><span class="legend-disclaimer">Synthetic sample regions</span></div>
+        </article>
+
+        <article id="insights" class="panel insight-panel">
+          <div class="panel-head"><div><span class="eyebrow">RULE-BASED INSIGHTS</span><h2>Risk distribution</h2><p>Severity counts from the current sample scan.</p></div><span class="insight-icon">✧</span></div>
+          <div class="wave-heading"><span>Sample signal activity</span><b><i></i> ANIMATION ONLY</b></div>
+          <svg class="risk-wave" viewBox="0 0 480 120" role="img" aria-label="Animated illustrative sample signal activity graph">
+            <defs><linearGradient id="waveFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#36d9ff" stop-opacity=".28"/><stop offset="1" stop-color="#36d9ff" stop-opacity="0"/></linearGradient></defs>
+            <path class="wave-grid" d="M0 20H480M0 50H480M0 80H480M0 110H480M40 0V120M120 0V120M200 0V120M280 0V120M360 0V120M440 0V120"/>
+            <path id="riskWaveArea" class="wave-area" d="M0 83 C40 77 50 63 88 70 S138 87 170 61 S220 38 254 58 S301 85 335 50 S390 30 418 48 S455 58 480 27 V120 H0Z"/>
+            <path id="riskWavePath" class="wave-path" d="M0 83 C40 77 50 63 88 70 S138 87 170 61 S220 38 254 58 S301 85 335 50 S390 30 418 48 S455 58 480 27"/>
+            <circle class="wave-beacon" r="5"><animateMotion dur="7s" repeatCount="indefinite" path="M0 83 C40 77 50 63 88 70 S138 87 170 61 S220 38 254 58 S301 85 335 50 S390 30 418 48 S455 58 480 27"/></circle>
+          </svg>
+          <div class="wave-caption"><span>Emerging ↗ easing ↘</span><span>No live telemetry connected</span></div>
+          <div class="chart-divider"></div>
+          <div class="severity-caption">Finding counts from the current sample scan</div>
+          <div id="severityChart" class="severity-chart" aria-label="Finding counts by severity"><div class="chart-empty">Run a scan to build the chart.</div></div>
+          <div class="insight-note"><span class="note-icon">✦</span><p id="riskSummary">Scan the sample identities to see the highest-priority pattern.</p></div>
+        </article>
+      </section>
+
+      <section id="topology" class="topology-layout" aria-label="Interactive cloud topology and access flow">
+        <article class="panel topology-panel">
+          <div class="panel-head"><div><span class="eyebrow">INTERACTIVE ACCESS GRAPH</span><h2>Cloud topology & access flow</h2><p>Select a node to inspect its owner, roles, risk and lock state.</p></div><span class="topology-live"><i></i> MODEL GRAPH</span></div>
+          <div id="topologyStage" class="topology-stage" role="group" aria-label="Sample IAM access graph">
+            <svg class="topology-lines" viewBox="0 0 800 440" preserveAspectRatio="none" aria-hidden="true">
+              <path class="topology-link normal" data-link="cloud-vpc" d="M400 212 C330 184 238 116 140 86"/><path class="topology-link privileged" data-link="cloud-admin" d="M400 212 C322 220 232 211 140 207"/>
+              <path class="topology-link risky" data-link="cloud-guest" d="M400 212 C305 280 220 328 140 345"/><path class="topology-link secure" data-link="cloud-app" d="M400 212 C340 300 238 390 140 402"/>
+              <path class="topology-link normal" data-link="cloud-compute" d="M400 212 C476 169 555 116 660 86"/><path class="topology-link risky" data-link="cloud-storage" d="M400 212 C490 210 570 207 660 207"/>
+              <path class="topology-link privileged" data-link="cloud-database" d="M400 212 C485 267 571 311 660 345"/><path class="topology-link normal" data-link="cloud-function" d="M400 212 C470 310 560 383 660 402"/>
+              <circle class="topology-drop risky" data-drop="cloud-admin" r="5"><animateMotion dur="1.25s" repeatCount="indefinite" path="M400 212 C322 220 232 211 140 207"/></circle>
+              <circle class="topology-drop risky" data-drop="cloud-guest" r="5"><animateMotion dur="1.6s" repeatCount="indefinite" path="M400 212 C305 280 220 328 140 345"/></circle>
+              <circle class="topology-drop secure" data-drop="cloud-app" r="5"><animateMotion dur="1.45s" repeatCount="indefinite" path="M400 212 C340 300 238 390 140 402"/></circle>
+              <circle class="topology-drop risky" data-drop="cloud-compute" r="5"><animateMotion dur="1.35s" repeatCount="indefinite" path="M400 212 C476 169 555 116 660 86"/></circle>
+              <circle class="topology-drop risky" data-drop="cloud-storage" r="5"><animateMotion dur="1.5s" repeatCount="indefinite" path="M400 212 C490 210 570 207 660 207"/></circle>
+              <circle class="topology-drop risky" data-drop="cloud-database" r="5"><animateMotion dur="1.4s" repeatCount="indefinite" path="M400 212 C485 267 571 311 660 345"/></circle>
+              <circle class="topology-drop secure" data-drop="cloud-function" r="5"><animateMotion dur="1.65s" repeatCount="indefinite" path="M400 212 C470 310 560 383 660 402"/></circle>
+              <circle class="topology-impact" data-impact="cloud-admin" cx="140" cy="207" r="12"/><circle class="topology-impact" data-impact="cloud-guest" cx="140" cy="345" r="12"/><circle class="topology-impact safe" data-impact="cloud-app" cx="140" cy="402" r="10"/>
+              <circle class="topology-impact" data-impact="cloud-compute" cx="660" cy="86" r="12"/><circle class="topology-impact" data-impact="cloud-storage" cx="660" cy="207" r="12"/><circle class="topology-impact" data-impact="cloud-database" cx="660" cy="345" r="12"/><circle class="topology-impact safe" data-impact="cloud-function" cx="660" cy="402" r="10"/>
+              <circle class="topology-packet" r="4"><animateMotion dur="5s" repeatCount="indefinite" path="M140 207 C250 195 300 205 400 212 S550 230 660 345"/></circle>
+            </svg>
+            <button class="topology-node node-user" data-node="admin" type="button"><i>♙</i><span><b>Admin identity</b><small>IAM principal</small></span><em class="node-lock">🔒</em></button>
+            <button class="topology-node node-guest" data-node="guest" type="button"><i>♧</i><span><b>External principal</b><small>Public access</small></span><em class="node-lock">🔒</em></button>
+            <button class="topology-node node-developer" data-node="developer" type="button"><i>⌘</i><span><b>Developer account</b><small>Service identity</small></span><em class="node-lock">🔒</em></button>
+            <button class="topology-node node-app" data-node="app" type="button"><i>▣</i><span><b>Application user</b><small>Read only</small></span><em class="node-lock">🔓</em></button>
+            <button class="topology-node node-compute" data-node="compute" type="button"><i>▦</i><span><b>Compute / VM</b><small>Cloud resource</small></span><em class="node-lock">🔒</em></button>
+            <button class="topology-node node-storage" data-node="storage" type="button"><i>▤</i><span><b>Object storage</b><small>Bucket policy</small></span><em class="node-lock">🔒</em></button>
+            <button class="topology-node node-database" data-node="database" type="button"><i>◉</i><span><b>Database</b><small>Data service</small></span><em class="node-lock">🔒</em></button>
+            <button class="topology-node node-function" data-node="function" type="button"><i>λ</i><span><b>Serverless app</b><small>Function role</small></span><em class="node-lock">🔓</em></button>
+            <div id="topologyCloud" class="topology-cloud" role="img" aria-label="Sample AWS, Azure, and Google Cloud environment protected by IAM">
+              <span class="topology-ring ring-one"></span><span class="topology-ring ring-two"></span><span class="topology-cloud-icon">☁</span><b>Cloud IAM</b><small>AWS · AZURE · GCP</small><span class="topology-center-lock">🔒</span>
+            </div>
+            <div class="topology-scanline" aria-hidden="true"></div>
+          </div>
+          <div class="topology-legend"><span><i class="critical-dot"></i> Critical / High</span><span><i class="medium-dot"></i> Moderate</span><span><i class="safe-dot"></i> Secure</span><span class="legend-disclaimer">Synthetic relationships</span></div>
+        </article>
+        <aside class="panel topology-detail" aria-live="polite">
+          <span class="eyebrow">SELECTED NODE</span><h2 id="nodeTitle">Cloud IAM hub</h2><p id="nodeDescription">The access graph shows how identities reach cloud services. Choose a node to view its current access posture.</p>
+          <div class="node-facts"><div><small>TYPE</small><b id="nodeType">Environment</b></div><div><small>OWNER</small><b id="nodeOwner">Security operations</b></div><div><small>IAM ROLE</small><b id="nodeRole">Sample policy set</b></div><div><small>RISK SCORE</small><b id="nodeScore">—</b></div></div>
+          <div id="nodeSecurityState" class="node-security-state"><span>◈</span><b>Waiting for sample scan</b></div>
+          <div class="node-actions"><button id="nodeFixButton" type="button" disabled>SIMULATE FIX</button><button id="nodeVerifyButton" type="button" disabled>VERIFY SCAN</button></div>
+          <small class="local-note">Actions update local simulation records only.</small>
+        </aside>
+      </section>
+
+      <section class="lower-grid" aria-label="Security guidance">
+        <article class="panel guard-panel"><div class="panel-head"><div><span class="eyebrow">SAFE WORKFLOW</span><h2>Protection guard</h2><p>Containment is simulated; no cloud resource is changed.</p></div><span class="guard-status"><i></i> REVIEW MODE</span></div>
+          <div id="resourceLocker" class="resource-locker" data-state="locked"><span class="locker-symbol" aria-hidden="true"><svg viewBox="0 0 32 36"><rect x="5" y="14" width="22" height="18" rx="4"/><path class="locker-shackle" d="M10 14V10a6 6 0 0 1 12 0v4"/><path class="locker-open-shackle" d="M10 14V10a6 6 0 0 1 12 0"/><circle cx="16" cy="22" r="2"/><path d="M16 24v3"/></svg></span><span class="locker-copy"><small>RESOURCE CONTAINMENT · SIMULATED</small><b id="lockerTitle">Checking sample risk…</b><span id="lockerDetail">Risk-based lock status will appear after the first scan.</span></span><button id="lockerButton" type="button" disabled>CHECKING RISK</button></div>
+          <div class="guard-grid"><div><i>◇</i><b>Least privilege</b><small>Review broad roles</small></div><div><i>◉</i><b>Access monitoring</b><small>Inspect sample findings</small></div><div><i>↗</i><b>Human approval</b><small>No auto-remediation</small></div><div><i>⌑</i><b>Credential hygiene</b><small>Review key age</small></div></div>
+        </article>
+        <article class="panel heat-panel"><div class="panel-head"><div><span class="eyebrow">IDENTITY RISK</span><h2>Risk heatmap</h2><p>One tile per sample identity.</p></div><span class="heat-icon">▦</span></div><div id="identityHeatmap" class="identity-heatmap"><div class="chart-empty">Run a scan to map identity scores.</div></div></article>
+      </section>
+
+      <section id="findings" class="panel findings"><div class="panel-head"><div><span class="eyebrow">EXPLAINABLE ANALYSIS <span class="count" id="openCount">0</span></span><h2>Findings & next steps</h2><p>Each finding includes evidence and a review recommendation.</p></div><select id="filterSeverity" aria-label="Filter findings"><option value="all">All severities</option><option value="Critical">Critical</option><option value="High">High</option><option value="Medium">Medium</option></select></div><div id="findingList" class="finding-list"><div class="empty">Run an IAM scan to analyze identity records.</div></div></section>
+
+      <section id="identities" class="panel identities"><div class="panel-head"><div><span class="eyebrow">IDENTITY INVENTORY</span><h2>Sample identities</h2><p>Only synthetic example data is included.</p></div><input id="searchInput" type="search" placeholder="Search identities" aria-label="Search identities"></div><div class="table-wrap"><table><thead><tr><th>IDENTITY</th><th>TYPE</th><th>ROLES</th><th>RISK</th><th>KEY AGE</th></tr></thead><tbody id="identityRows"><tr><td class="empty-cell" colspan="5">Waiting for sample scan.</td></tr></tbody></table></div></section>
+
+      <section id="scan-history" class="panel scan-history"><div class="panel-head"><div><span class="eyebrow">LOCAL SESSION HISTORY</span><h2>Scan history</h2><p>Compare recent synthetic scans on this browser.</p></div><button id="clearHistoryButton" class="history-clear" type="button">CLEAR HISTORY</button></div><div id="historyList" class="history-list"><div class="empty">Run a sample scan to start history.</div></div></section>
+      <section id="settings" class="panel settings-panel"><div class="panel-head"><div><span class="eyebrow">SCAN SETTINGS</span><h2>Scan scope</h2><p>Adjust which identity and credential signals are included in analysis.</p></div></div><div class="settings-options"><label><input id="includeMfaSetting" type="checkbox" checked> Include MFA posture</label><label><input id="includeKeySetting" type="checkbox" checked> Include service key hygiene</label><span class="local-note">Cloud connectors and live sign-in telemetry are not connected. Remediation requires analyst review.</span></div></section>
+
+      <footer><span>Sentinel IAM <i>·</i> Identity security operations</span><span id="footerStatus">Synthetic identity data · Remediation is simulated · No cloud connection</span></footer>
+    </main>
+  </div>
+  <aside class="live-dock" aria-label="Risk monitoring status"><span class="dock-beacon"></span><b id="liveDockState" data-state="risk">LOCAL ANALYSIS</b><span>RISK <strong id="liveDockRisk">--</strong></span><span>OPEN <strong id="liveDockFindings">--</strong></span><span>GUARD <strong id="liveDockLock">LOCKED</strong></span><i class="dock-progress"><em id="liveDockProgress"></em></i></aside>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="assets/js/dashboard.js?v=19"></script>
+</body>
+</html>
