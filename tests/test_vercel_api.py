@@ -2,10 +2,19 @@ import os
 import unittest
 from unittest.mock import patch
 
-from api.index import get_response, post_response
+from api.index import get_response, post_response, request_path
 
 
 class VercelApiTests(unittest.TestCase):
+    def test_request_path_uses_original_route_from_vercel_rewrite(self):
+        self.assertEqual(
+            request_path("/api/index.py?route=%2Fapi%2Fhealth"),
+            "/api/health",
+        )
+
+    def test_request_path_supports_local_unrewritten_urls(self):
+        self.assertEqual(request_path("/api/health"), "/api/health")
+
     def test_health_endpoint_reports_sample_mode(self):
         payload, status = get_response("/api/health")
 

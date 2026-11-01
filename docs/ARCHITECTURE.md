@@ -5,7 +5,7 @@ The local application has one Python server for both the static dashboard and JS
 ## Request flow
 
 1. Locally, `run.bat` starts `server.py`, which calls `backend/app.py`; that server serves the frontend and handles `/api/*`.
-2. On Vercel, `vercel.json` serves `frontend/` and rewrites `/api/*` to `api/index.py`.
+2. On Vercel, `vercel.json` serves `frontend/` and rewrites `/api/*` to `api/index.py`, passing the requested route in a query parameter so the handler works with Vercel's rewritten destination path.
 3. Both API entry points use `backend/scanner.py`, which loads `data/sample_iam_identities.json` for synthetic sample scans.
 4. The frontend renders scan metrics, identities, findings, and review status.
 

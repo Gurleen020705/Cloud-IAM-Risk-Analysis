@@ -5,7 +5,7 @@ import json
 import os
 from http.server import BaseHTTPRequestHandler
 from typing import Any
-from urllib.parse import unquote, urlparse
+from urllib.parse import parse_qs, unquote, urlparse
 
 from backend.scanner import scan_gcp_project, scan_sample
 
@@ -24,6 +24,12 @@ def empty_dashboard() -> dict[str, Any]:
             "compliance": 0,
         },
     }
+
+
+def request_path(request_target: str) -> str:
+    parsed = urlparse(request_target)
+    route = parse_qs(parsed.query).get("route", [parsed.path])[0]
+    return unquote(route)
 
 
 def get_response(path: str) -> tuple[dict[str, Any], int]:
@@ -80,11 +86,11 @@ class handler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
     def do_GET(self) -> None:
-        path = unquote(urlparse(self.path).path)
+        path = request_path(self.path)
         payload, status = get_response(path)
         self.send_json(payload, status)
 
     def do_POST(self) -> None:
-        path = unquote(urlparse(self.path).path)
+        path = request_path(self.path)
         payload, status = post_response(path)
         self.send_json(payload, status)
