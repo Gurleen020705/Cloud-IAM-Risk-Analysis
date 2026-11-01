@@ -1,0 +1,14 @@
+{
+  "outputDirectory": "frontend",
+  "functions": {
+    "api/index.py": {
+      "includeFiles": ["data/sample_iam_identities.json"]
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
+    }
+  ]
+}

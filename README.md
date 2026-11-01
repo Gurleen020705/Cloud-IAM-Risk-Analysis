@@ -57,4 +57,22 @@ The dashboard background includes a low-contrast decorative code-typing effect; 
 - `POST /api/scan` — analyzes the bundled sample data.
 - `POST /api/findings/{finding_id}/review` — marks a demo finding reviewed in memory.
 
-The server binds to `127.0.0.1` and prints that exact IPv4 address (not `localhost`, which may resolve to IPv6 `::1` on Windows). It prefers port `8004`, then tries `8005`–`8023` if occupied. It is intended for local learning, not public deployment.
+The local server binds to `127.0.0.1` and prints that exact IPv4 address (not `localhost`, which may resolve to IPv6 `::1` on Windows). It prefers port `8004`, then tries `8005`–`8023` if occupied. For public sample-demo hosting, see [Deploy to Vercel](#deploy-to-vercel).
+
+## Deploy to Vercel
+
+The Vercel configuration serves the static dashboard from `frontend/` and routes `/api/*` to a Python serverless function. The default deployment uses synthetic sample data and needs no Google Cloud credentials.
+
+### One-time setup
+
+1. Create a Vercel account, install the Vercel CLI locally with `npm install --global vercel`, and sign in with `vercel login`.
+2. From the repository folder, run `vercel link` and create or select a Vercel project. Keep the generated `.vercel/` folder local; it is ignored by Git.
+3. In Vercel account settings, create a token with access to that project.
+4. In the GitHub repository, open **Settings → Secrets and variables → Actions** and add these repository secrets:
+   - `VERCEL_TOKEN`: the Vercel token.
+   - `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID`: copy these from `.vercel/project.json` created by `vercel link`.
+5. Push this workflow and the Vercel configuration to the `main` branch. The GitHub Actions workflow runs Python checks on pull requests and deploys to production after a successful push to `main`. You can also start a validation run from **Actions → Deploy to Vercel → Run workflow**; production deployment is limited to pushes to `main`.
+
+The dashboard is public once deployed. Do not configure `GCP_PROJECT_ID` or cloud credentials for this unauthenticated demo deployment: doing so would expose the read-only scan endpoint publicly. Vercel functions are stateless, so reviewed-finding status and the latest scan are not persisted by the API; browser-session state remains local to each visitor. To avoid competing production deployments, use this workflow as the production deployer rather than enabling a second automatic production deploy from Vercel's Git integration.
+
+To test the API route handlers locally without deploying, run `python -m unittest discover -s tests -v`.
