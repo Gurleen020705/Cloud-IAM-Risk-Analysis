@@ -2,7 +2,7 @@
   "outputDirectory": "frontend",
   "functions": {
     "api/index.py": {
-      "includeFiles": ["data/sample_iam_identities.json"]
+      "includeFiles": "data/sample_iam_identities.json"
     }
   },
   "rewrites": [
